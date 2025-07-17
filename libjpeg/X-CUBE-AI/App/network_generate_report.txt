@@ -1,0 +1,527 @@
+ST Edge AI Core v1.0.0-19894
+Created date          : 2025-07-17 23:05:46
+Parameters            : generate --target stm32f4 --name network -m C:/Users/18033/Desktop/hrnetlite18_lite_40_new_rgb.tflite --compression none --verbosity 1 --allocate-inputs --allocate-outputs --workspace C:/Users/18033/AppData/Local/Temp/mxAI_workspace5058350545815005846058724087292763 --output C:/Users/18033/.stm32cubemx/network_output
+
+Exec/report summary (generate)
+------------------------------------------------------------------------------------------------------------
+model file         :   C:\Users\18033\Desktop\hrnetlite18_lite_40_new_rgb.tflite                            
+type               :   tflite                                                                               
+c_name             :   network                                                                              
+compression        :   none                                                                                 
+options            :   allocate-inputs, allocate-outputs                                                    
+optimization       :   balanced                                                                             
+target/series      :   stm32f4                                                                              
+workspace dir      :   C:\Users\18033\AppData\Local\Temp\mxAI_workspace5058350545815005846058724087292763   
+output dir         :   C:\Users\18033\.stm32cubemx\network_output                                           
+model_fmt          :   float                                                                                
+model_name         :   hrnetlite18_lite_40_new_rgb                                                          
+model_hash         :   0x111e80724e190b4ce1a44f139c2ee9ab                                                   
+params #           :   93,059 items (96.51 KiB)                                                             
+------------------------------------------------------------------------------------------------------------
+input 1/1          :   'serving_default_input_10', f32(1x40x40x3), 18.75 KBytes, activations                
+output 1/1         :   'nl_34', f32(1x3), 12 Bytes, activations                                             
+macc               :   7,277,168                                                                            
+weights (ro)       :   372,236 B (363.51 KiB) (1 segment)                                                   
+activations (rw)   :   62,988 B (61.51 KiB) (1 segment) *                                                   
+ram (total)        :   62,988 B (61.51 KiB) = 62,988 + 0 + 0                                                
+------------------------------------------------------------------------------------------------------------
+(*) 'input'/'output' buffers can be used from the activations buffer
+
+Model name - hrnetlite18_lite_40_new_rgb
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+m_id   layer (type,original)                                           oshape                 param/size             macc                                    connected to   | c_size             c_macc              c_type                          
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+0      serving_default_input_10 (Input, )                              [b:1,h:40,w:40,c:3]                                                                                  | +3,584(+100.0%)    +358,432(+100.0%)   Conv2D_/Nonlinearity_[0, 1]     
+       conv2d_0 (Conv2D, CONV_2D)                                      [b:1,h:20,w:20,c:32]   896/3,584           345,632                        serving_default_input_10   | -3,584(-100.0%)    -345,632(-100.0%)   
+       nl_0_nl (Nonlinearity, CONV_2D)                                 [b:1,h:20,w:20,c:32]                        12,800                                        conv2d_0   |                    -12,800(-100.0%)    
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+1      model_batch_normalization_FusedBatchNormV31 (Placeholder, )     [c:32]                 32/128                                                                        | -128(-100.0%)                          
+       eltwise_1 (Eltwise, MUL)                                        [b:1,h:20,w:20,c:32]                        12,800                                         nl_0_nl   |                    -12,800(-100.0%)    
+                                                                                                                              model_batch_normalization_FusedBatchNormV31   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+2      model_batch_normalization_FusedBatchNormV3 (Placeholder, )      [c:32]                 32/128                                                                        | +128(+100.0%)      +25,600(+100.0%)    ScaleBias_[2]                   
+       eltwise_2 (Eltwise, ADD)                                        [b:1,h:20,w:20,c:32]                        12,800                                       eltwise_1   |                    -12,800(-100.0%)    
+                                                                                                                               model_batch_normalization_FusedBatchNormV3   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+3      conv2d_3 (Conv2D, CONV_2D)                                      [b:1,h:20,w:20,c:32]   9,248/9,344       3,686,432                                       eltwise_2   | +27,648(+295.9%)   +12,800(+0.3%)      Conv2D_/Nonlinearity_[3, 4]     
+       nl_3_nl (Nonlinearity, CONV_2D)                                 [b:1,h:20,w:20,c:32]                        12,800                                        conv2d_3   |                    -12,800(-100.0%)    
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+4      model_batch_normalization_1_FusedBatchNormV31 (Placeholder, )   [c:32]                 32/128                                                                        | -128(-100.0%)                          
+       eltwise_4 (Eltwise, MUL)                                        [b:1,h:20,w:20,c:32]                        12,800                                         nl_3_nl   |                    -12,800(-100.0%)    
+                                                                                                                            model_batch_normalization_1_FusedBatchNormV31   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+5      model_batch_normalization_1_FusedBatchNormV3 (Placeholder, )    [c:32]                 32/128                                                                        | +128(+100.0%)      +25,600(+100.0%)    ScaleBias_[5]                   
+       eltwise_5 (Eltwise, ADD)                                        [b:1,h:20,w:20,c:32]                        12,800                                       eltwise_4   |                    -12,800(-100.0%)    
+                                                                                                                             model_batch_normalization_1_FusedBatchNormV3   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+6      conv2d_6 (Conv2D, CONV_2D)                                      [b:1,h:10,w:10,c:32]   9,248/9,344         921,632                                       eltwise_5   | +27,648(+295.9%)   +3,200(+0.3%)       Conv2D_/Nonlinearity_[6, 7]     
+       nl_6_nl (Nonlinearity, CONV_2D)                                 [b:1,h:10,w:10,c:32]                         3,200                                        conv2d_6   |                    -3,200(-100.0%)     
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+7      model_batch_normalization_2_FusedBatchNormV31 (Placeholder, )   [c:32]                 32/128                                                                        | -128(-100.0%)                          
+       eltwise_7 (Eltwise, MUL)                                        [b:1,h:10,w:10,c:32]                         3,200                                         nl_6_nl   |                    -3,200(-100.0%)     
+                                                                                                                            model_batch_normalization_2_FusedBatchNormV31   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+8      model_batch_normalization_2_FusedBatchNormV3 (Placeholder, )    [c:32]                 32/128                                                                        | +128(+100.0%)      +6,400(+100.0%)     ScaleBias_[8]                   
+       eltwise_8 (Eltwise, ADD)                                        [b:1,h:10,w:10,c:32]                         3,200                                       eltwise_7   |                    -3,200(-100.0%)     
+                                                                                                                             model_batch_normalization_2_FusedBatchNormV3   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+9      conv2d_9 (Conv2D, CONV_2D)                                      [b:1,h:10,w:10,c:32]   9,248/9,344         921,632                                       eltwise_8   | +27,648(+295.9%)   +3,200(+0.3%)       Conv2D_/Nonlinearity_[9, 10]    
+       nl_9_nl (Nonlinearity, CONV_2D)                                 [b:1,h:10,w:10,c:32]                         3,200                                        conv2d_9   |                    -3,200(-100.0%)     
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+10     model_batch_normalization_3_FusedBatchNormV31 (Placeholder, )   [c:32]                 32/128                                                                        | -128(-100.0%)                          
+       eltwise_10 (Eltwise, MUL)                                       [b:1,h:10,w:10,c:32]                         3,200                                         nl_9_nl   |                    -3,200(-100.0%)     
+                                                                                                                            model_batch_normalization_3_FusedBatchNormV31   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+11     model_batch_normalization_3_FusedBatchNormV3 (Placeholder, )    [c:32]                 32/128                                                                        | +128(+100.0%)      +6,400(+100.0%)     ScaleBias_[11]                  
+       eltwise_11 (Eltwise, ADD)                                       [b:1,h:10,w:10,c:32]                         3,200                                      eltwise_10   |                    -3,200(-100.0%)     
+                                                                                                                             model_batch_normalization_3_FusedBatchNormV3   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+12     conv2d_12 (Conv2D, CONV_2D)                                     [b:1,h:5,w:5,c:32]     9,248/9,344         230,432                                      eltwise_11   | +27,648(+295.9%)   +800(+0.3%)         Conv2D_/Nonlinearity_[12, 13]   
+       nl_12_nl (Nonlinearity, CONV_2D)                                [b:1,h:5,w:5,c:32]                             800                                       conv2d_12   |                    -800(-100.0%)       
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+13     model_batch_normalization_4_FusedBatchNormV31 (Placeholder, )   [c:32]                 32/128                                                                        | -128(-100.0%)                          
+       eltwise_13 (Eltwise, MUL)                                       [b:1,h:5,w:5,c:32]                             800                                        nl_12_nl   |                    -800(-100.0%)       
+                                                                                                                            model_batch_normalization_4_FusedBatchNormV31   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+14     model_batch_normalization_4_FusedBatchNormV3 (Placeholder, )    [c:32]                 32/128                                                                        | +128(+100.0%)      +1,600(+100.0%)     ScaleBias_[14]                  
+       eltwise_14 (Eltwise, ADD)                                       [b:1,h:5,w:5,c:32]                             800                                      eltwise_13   |                    -800(-100.0%)       
+                                                                                                                             model_batch_normalization_4_FusedBatchNormV3   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+15     conv2d_15 (Conv2D, CONV_2D)                                     [b:1,h:5,w:5,c:32]     9,248/9,344         230,432                                      eltwise_14   | +27,648(+295.9%)   +800(+0.3%)         Conv2D_/Nonlinearity_[15, 16]   
+       nl_15_nl (Nonlinearity, CONV_2D)                                [b:1,h:5,w:5,c:32]                             800                                       conv2d_15   |                    -800(-100.0%)       
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+16     model_batch_normalization_5_FusedBatchNormV31 (Placeholder, )   [c:32]                 32/128                                                                        | -128(-100.0%)                          
+       eltwise_16 (Eltwise, MUL)                                       [b:1,h:5,w:5,c:32]                             800                                        nl_15_nl   |                    -800(-100.0%)       
+                                                                                                                            model_batch_normalization_5_FusedBatchNormV31   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+17     model_batch_normalization_5_FusedBatchNormV3 (Placeholder, )    [c:32]                 32/128                                                                        | +128(+100.0%)      +1,600(+100.0%)     ScaleBias_[17]                  
+       eltwise_17 (Eltwise, ADD)                                       [b:1,h:5,w:5,c:32]                             800                                      eltwise_16   |                    -800(-100.0%)       
+                                                                                                                             model_batch_normalization_5_FusedBatchNormV3   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+18     conv2d_18 (Conv2D, CONV_2D)                                     [b:1,h:5,w:5,c:32]     25,632/25,728       640,032                                      eltwise_17   | +76,800(+298.5%)   +800(+0.1%)         Conv2D_/Nonlinearity_[21, 22]   
+       nl_18_nl (Nonlinearity, CONV_2D)                                [b:1,h:5,w:5,c:32]                             800                                       conv2d_18   |                    -800(-100.0%)       
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+19     model_batch_normalization_6_FusedBatchNormV31 (Placeholder, )   [c:32]                 32/128                                                                        | -128(-100.0%)                          
+       eltwise_19 (Eltwise, MUL)                                       [b:1,h:5,w:5,c:32]                             800                                        nl_18_nl   |                    -800(-100.0%)       
+                                                                                                                            model_batch_normalization_6_FusedBatchNormV31   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+20     model_batch_normalization_6_FusedBatchNormV3 (Placeholder, )    [c:32]                 32/128                                                                        | +128(+100.0%)      +1,600(+100.0%)     ScaleBias_[23]                  
+       eltwise_20 (Eltwise, ADD)                                       [b:1,h:5,w:5,c:32]                             800                                      eltwise_19   |                    -800(-100.0%)       
+                                                                                                                             model_batch_normalization_6_FusedBatchNormV3   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+21     eltwise_21 (Eltwise, ADD)                                       [b:1,h:5,w:5,c:32]                             800                                      eltwise_17   |                                        Eltwise/add_[24]                
+                                                                                                                                                               eltwise_20   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+22     conv2d_22 (Conv2D, CONV_2D)                                     [b:1,h:5,w:5,c:32]     1,056/1,152          25,632                                      eltwise_17   | +3,072(+266.7%)    +800(+3.1%)         Conv2D_/Nonlinearity_[18, 19]   
+       nl_22_nl (Nonlinearity, CONV_2D)                                [b:1,h:5,w:5,c:32]                             800                                       conv2d_22   |                    -800(-100.0%)       
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+23     model_batch_normalization_7_FusedBatchNormV31 (Placeholder, )   [c:32]                 32/128                                                                        | -128(-100.0%)                          
+       eltwise_23 (Eltwise, MUL)                                       [b:1,h:5,w:5,c:32]                             800                                        nl_22_nl   |                    -800(-100.0%)       
+                                                                                                                            model_batch_normalization_7_FusedBatchNormV31   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+24     model_batch_normalization_7_FusedBatchNormV3 (Placeholder, )    [c:32]                 32/128                                                                        | +128(+100.0%)      +1,600(+100.0%)     ScaleBias_[20]                  
+       eltwise_24 (Eltwise, ADD)                                       [b:1,h:5,w:5,c:32]                             800                                      eltwise_23   |                    -800(-100.0%)       
+                                                                                                                             model_batch_normalization_7_FusedBatchNormV3   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+25     eltwise_25 (Eltwise, ADD)                                       [b:1,h:5,w:5,c:32]                             800                                      eltwise_21   |                                        Eltwise/add_[25]                
+                                                                                                                                                               eltwise_24   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+26     conv2d_26 (Conv2D, CONV_2D)                                     [b:1,h:3,w:3,c:32]     9,248/9,344          82,976                                      eltwise_25   | +27,648(+295.9%)   +288(+0.3%)         Conv2D_/Nonlinearity_[26, 27]   
+       nl_26_nl (Nonlinearity, CONV_2D)                                [b:1,h:3,w:3,c:32]                             288                                       conv2d_26   |                    -288(-100.0%)       
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+27     model_batch_normalization_8_FusedBatchNormV31 (Placeholder, )   [c:32]                 32/128                                                                        | -128(-100.0%)                          
+       eltwise_27 (Eltwise, MUL)                                       [b:1,h:3,w:3,c:32]                             288                                        nl_26_nl   |                    -288(-100.0%)       
+                                                                                                                            model_batch_normalization_8_FusedBatchNormV31   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+28     model_batch_normalization_8_FusedBatchNormV3 (Placeholder, )    [c:32]                 32/128                                                                        | +128(+100.0%)      +576(+100.0%)       ScaleBias_[28]                  
+       eltwise_28 (Eltwise, ADD)                                       [b:1,h:3,w:3,c:32]                             288                                      eltwise_27   |                    -288(-100.0%)       
+                                                                                                                             model_batch_normalization_8_FusedBatchNormV3   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+29     conv2d_29 (Conv2D, CONV_2D)                                     [b:1,h:3,w:3,c:32]     9,248/9,344          82,976                                      eltwise_28   | +27,648(+295.9%)   +288(+0.3%)         Conv2D_/Nonlinearity_[29, 30]   
+       nl_29_nl (Nonlinearity, CONV_2D)                                [b:1,h:3,w:3,c:32]                             288                                       conv2d_29   |                    -288(-100.0%)       
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+30     model_batch_normalization_9_FusedBatchNormV31 (Placeholder, )   [c:32]                 32/128                                                                        | -128(-100.0%)                          
+       eltwise_30 (Eltwise, MUL)                                       [b:1,h:3,w:3,c:32]                             288                                        nl_29_nl   |                    -288(-100.0%)       
+                                                                                                                            model_batch_normalization_9_FusedBatchNormV31   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+31     model_batch_normalization_9_FusedBatchNormV3 (Placeholder, )    [c:32]                 32/128                                                                        | +128(+100.0%)      +576(+100.0%)       ScaleBias_[31]                  
+       eltwise_31 (Eltwise, ADD)                                       [b:1,h:3,w:3,c:32]                             288                                      eltwise_30   |                    -288(-100.0%)       
+                                                                                                                             model_batch_normalization_9_FusedBatchNormV3   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+32     pool_32 (Pool, MEAN)                                            [b:1,h:1,w:1,c:32]                             288                                      eltwise_31   |                                        Pool_[32]                       
+       reshape_32_reshape (Reshape, MEAN)                              [b:1,c:32]                                                                                 pool_32   |                                        
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+33     model_dense_MatMul (Placeholder, )                              [h:3,c:32]             96/384                                                                        | +12(+3.1%)         +99(+100.0%)        Dense_[33]                      
+       model_dense_BiasAdd_ReadVariableOp (Placeholder, )              [c:3]                  3/12                                                                          | -12(-100.0%)                           
+       gemm_33 (Gemm, FULLY_CONNECTED)                                 [b:1,c:3]                                       99                              reshape_32_reshape   |                    -99(-100.0%)        
+                                                                                                                                                       model_dense_MatMul   | 
+                                                                                                                                       model_dense_BiasAdd_ReadVariableOp   | 
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+34     nl_34 (Nonlinearity, SOFTMAX)                                   [b:1,c:3]                                       45                                         gemm_33   |                                        Nonlinearity_[o][34]            
+------ --------------------------------------------------------------- ---------------------- --------------- ----------- ----------------------------------------------- --- ------------------ ------------------- ------------------------------- 
+model/c-model: macc=7,277,168/7,277,168  weights=98,828/372,236 +273,408(+276.7%) activations=--/62,988 io=--/0
+
+
+
+Generated C-graph summary
+------------------------------------------------------------------------------------------------------------------------
+model name            : hrnetlite18_lite_40_new_rgb
+c-name                : network
+c-node #              : 35
+c-array #             : 88
+activations size      : 62988 (1 segment)
+weights size          : 372236 (1 segment)
+macc                  : 7277168
+inputs                : ['serving_default_input_10_output']
+outputs               : ['nl_34_output']
+
+C-Arrays (88)
+------ --------------------------------- -------------- ------------------------- ------------- --------- 
+c_id   name (*_array)                    item/size      domain/mem-pool           c-type        comment   
+------ --------------------------------- -------------- ------------------------- ------------- --------- 
+0      conv2d_0_bias                     32/128         weights/weights           const float             
+1      conv2d_0_output                   12800/51200    activations/**default**   float                   
+2      conv2d_0_scratch0                 27/108         activations/**default**   float                   
+3      conv2d_0_weights                  864/3456       weights/weights           const float             
+4      conv2d_12_bias                    32/128         weights/weights           const float             
+5      conv2d_12_output                  800/3200       activations/**default**   float                   
+6      conv2d_12_scratch0                288/1152       activations/**default**   float                   
+7      conv2d_12_weights                 9216/36864     weights/weights           const float             
+8      conv2d_15_bias                    32/128         weights/weights           const float             
+9      conv2d_15_output                  800/3200       activations/**default**   float                   
+10     conv2d_15_scratch0                288/1152       activations/**default**   float                   
+11     conv2d_15_weights                 9216/36864     weights/weights           const float             
+12     conv2d_18_bias                    32/128         weights/weights           const float             
+13     conv2d_18_output                  800/3200       activations/**default**   float                   
+14     conv2d_18_scratch0                800/3200       activations/**default**   float                   
+15     conv2d_18_weights                 25600/102400   weights/weights           const float             
+16     conv2d_22_bias                    32/128         weights/weights           const float             
+17     conv2d_22_output                  800/3200       activations/**default**   float                   
+18     conv2d_22_scratch0                32/128         activations/**default**   float                   
+19     conv2d_22_weights                 1024/4096      weights/weights           const float             
+20     conv2d_26_bias                    32/128         weights/weights           const float             
+21     conv2d_26_output                  288/1152       activations/**default**   float                   
+22     conv2d_26_scratch0                288/1152       activations/**default**   float                   
+23     conv2d_26_weights                 9216/36864     weights/weights           const float             
+24     conv2d_29_bias                    32/128         weights/weights           const float             
+25     conv2d_29_output                  288/1152       activations/**default**   float                   
+26     conv2d_29_scratch0                288/1152       activations/**default**   float                   
+27     conv2d_29_weights                 9216/36864     weights/weights           const float             
+28     conv2d_3_bias                     32/128         weights/weights           const float             
+29     conv2d_3_output                   12800/51200    activations/**default**   float                   
+30     conv2d_3_scratch0                 288/1152       activations/**default**   float                   
+31     conv2d_3_weights                  9216/36864     weights/weights           const float             
+32     conv2d_6_bias                     32/128         weights/weights           const float             
+33     conv2d_6_output                   3200/12800     activations/**default**   float                   
+34     conv2d_6_scratch0                 288/1152       activations/**default**   float                   
+35     conv2d_6_weights                  9216/36864     weights/weights           const float             
+36     conv2d_9_bias                     32/128         weights/weights           const float             
+37     conv2d_9_output                   3200/12800     activations/**default**   float                   
+38     conv2d_9_scratch0                 288/1152       activations/**default**   float                   
+39     conv2d_9_weights                  9216/36864     weights/weights           const float             
+40     eltwise_10_bias                   32/128         weights/weights           const float             
+41     eltwise_10_output                 3200/12800     activations/**default**   float                   
+42     eltwise_10_scale                  32/128         weights/weights           const float             
+43     eltwise_13_bias                   32/128         weights/weights           const float             
+44     eltwise_13_output                 800/3200       activations/**default**   float                   
+45     eltwise_13_scale                  32/128         weights/weights           const float             
+46     eltwise_16_bias                   32/128         weights/weights           const float             
+47     eltwise_16_output                 800/3200       activations/**default**   float                   
+48     eltwise_16_scale                  32/128         weights/weights           const float             
+49     eltwise_19_bias                   32/128         weights/weights           const float             
+50     eltwise_19_output                 800/3200       activations/**default**   float                   
+51     eltwise_19_scale                  32/128         weights/weights           const float             
+52     eltwise_1_bias                    32/128         weights/weights           const float             
+53     eltwise_1_output                  12800/51200    activations/**default**   float                   
+54     eltwise_1_scale                   32/128         weights/weights           const float             
+55     eltwise_21_output                 800/3200       activations/**default**   float                   
+56     eltwise_23_bias                   32/128         weights/weights           const float             
+57     eltwise_23_output                 800/3200       activations/**default**   float                   
+58     eltwise_23_scale                  32/128         weights/weights           const float             
+59     eltwise_25_output                 800/3200       activations/**default**   float                   
+60     eltwise_27_bias                   32/128         weights/weights           const float             
+61     eltwise_27_output                 288/1152       activations/**default**   float                   
+62     eltwise_27_scale                  32/128         weights/weights           const float             
+63     eltwise_30_bias                   32/128         weights/weights           const float             
+64     eltwise_30_output                 288/1152       activations/**default**   float                   
+65     eltwise_30_scale                  32/128         weights/weights           const float             
+66     eltwise_4_bias                    32/128         weights/weights           const float             
+67     eltwise_4_output                  12800/51200    activations/**default**   float                   
+68     eltwise_4_scale                   32/128         weights/weights           const float             
+69     eltwise_7_bias                    32/128         weights/weights           const float             
+70     eltwise_7_output                  3200/12800     activations/**default**   float                   
+71     eltwise_7_scale                   32/128         weights/weights           const float             
+72     gemm_33_bias                      3/12           weights/weights           const float             
+73     gemm_33_output                    3/12           activations/**default**   float                   
+74     gemm_33_weights                   96/384         weights/weights           const float             
+75     nl_0_nl_output                    12800/51200    activations/**default**   float                   
+76     nl_12_nl_output                   800/3200       activations/**default**   float                   
+77     nl_15_nl_output                   800/3200       activations/**default**   float                   
+78     nl_18_nl_output                   800/3200       activations/**default**   float                   
+79     nl_22_nl_output                   800/3200       activations/**default**   float                   
+80     nl_26_nl_output                   288/1152       activations/**default**   float                   
+81     nl_29_nl_output                   288/1152       activations/**default**   float                   
+82     nl_34_output                      3/12           activations/**default**   float         /output   
+83     nl_3_nl_output                    12800/51200    activations/**default**   float                   
+84     nl_6_nl_output                    3200/12800     activations/**default**   float                   
+85     nl_9_nl_output                    3200/12800     activations/**default**   float                   
+86     pool_32_output                    32/128         activations/**default**   float                   
+87     serving_default_input_10_output   4800/19200     activations/**default**   float         /input    
+------ --------------------------------- -------------- ------------------------- ------------- --------- 
+
+C-Layers (35)
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+c_id   name (*_layer)   id   layer_type      macc      rom      tensors                              shape (array id)       
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+0      conv2d_0         0    Conv2D          345632    3584     I: serving_default_input_10_output   f32(1x40x40x3) (87)    
+                                                                S: conv2d_0_scratch0                                        
+                                                                W: conv2d_0_weights                  f32(32x3x3x3) (3)      
+                                                                W: conv2d_0_bias                     f32(32) (0)            
+                                                                O: conv2d_0_output                   f32(1x20x20x32) (1)    
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+1      nl_0_nl          0    Nonlinearity    12800     0        I: conv2d_0_output                   f32(1x20x20x32) (1)    
+                                                                O: nl_0_nl_output                    f32(1x20x20x32) (75)   
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+2      eltwise_1        2    ScaleBias       25600     256      I: nl_0_nl_output                    f32(1x20x20x32) (75)   
+                                                                W: eltwise_1_scale                   f32(32) (54)           
+                                                                W: eltwise_1_bias                    f32(32) (52)           
+                                                                O: eltwise_1_output                  f32(1x20x20x32) (53)   
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+3      conv2d_3         3    Conv2D          3686432   36992    I: eltwise_1_output                  f32(1x20x20x32) (53)   
+                                                                S: conv2d_3_scratch0                                        
+                                                                W: conv2d_3_weights                  f32(32x3x3x32) (31)    
+                                                                W: conv2d_3_bias                     f32(32) (28)           
+                                                                O: conv2d_3_output                   f32(1x20x20x32) (29)   
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+4      nl_3_nl          3    Nonlinearity    12800     0        I: conv2d_3_output                   f32(1x20x20x32) (29)   
+                                                                O: nl_3_nl_output                    f32(1x20x20x32) (83)   
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+5      eltwise_4        5    ScaleBias       25600     256      I: nl_3_nl_output                    f32(1x20x20x32) (83)   
+                                                                W: eltwise_4_scale                   f32(32) (68)           
+                                                                W: eltwise_4_bias                    f32(32) (66)           
+                                                                O: eltwise_4_output                  f32(1x20x20x32) (67)   
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+6      conv2d_6         6    Conv2D          921632    36992    I: eltwise_4_output                  f32(1x20x20x32) (67)   
+                                                                S: conv2d_6_scratch0                                        
+                                                                W: conv2d_6_weights                  f32(32x3x3x32) (35)    
+                                                                W: conv2d_6_bias                     f32(32) (32)           
+                                                                O: conv2d_6_output                   f32(1x10x10x32) (33)   
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+7      nl_6_nl          6    Nonlinearity    3200      0        I: conv2d_6_output                   f32(1x10x10x32) (33)   
+                                                                O: nl_6_nl_output                    f32(1x10x10x32) (84)   
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+8      eltwise_7        8    ScaleBias       6400      256      I: nl_6_nl_output                    f32(1x10x10x32) (84)   
+                                                                W: eltwise_7_scale                   f32(32) (71)           
+                                                                W: eltwise_7_bias                    f32(32) (69)           
+                                                                O: eltwise_7_output                  f32(1x10x10x32) (70)   
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+9      conv2d_9         9    Conv2D          921632    36992    I: eltwise_7_output                  f32(1x10x10x32) (70)   
+                                                                S: conv2d_9_scratch0                                        
+                                                                W: conv2d_9_weights                  f32(32x3x3x32) (39)    
+                                                                W: conv2d_9_bias                     f32(32) (36)           
+                                                                O: conv2d_9_output                   f32(1x10x10x32) (37)   
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+10     nl_9_nl          9    Nonlinearity    3200      0        I: conv2d_9_output                   f32(1x10x10x32) (37)   
+                                                                O: nl_9_nl_output                    f32(1x10x10x32) (85)   
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+11     eltwise_10       11   ScaleBias       6400      256      I: nl_9_nl_output                    f32(1x10x10x32) (85)   
+                                                                W: eltwise_10_scale                  f32(32) (42)           
+                                                                W: eltwise_10_bias                   f32(32) (40)           
+                                                                O: eltwise_10_output                 f32(1x10x10x32) (41)   
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+12     conv2d_12        12   Conv2D          230432    36992    I: eltwise_10_output                 f32(1x10x10x32) (41)   
+                                                                S: conv2d_12_scratch0                                       
+                                                                W: conv2d_12_weights                 f32(32x3x3x32) (7)     
+                                                                W: conv2d_12_bias                    f32(32) (4)            
+                                                                O: conv2d_12_output                  f32(1x5x5x32) (5)      
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+13     nl_12_nl         12   Nonlinearity    800       0        I: conv2d_12_output                  f32(1x5x5x32) (5)      
+                                                                O: nl_12_nl_output                   f32(1x5x5x32) (76)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+14     eltwise_13       14   ScaleBias       1600      256      I: nl_12_nl_output                   f32(1x5x5x32) (76)     
+                                                                W: eltwise_13_scale                  f32(32) (45)           
+                                                                W: eltwise_13_bias                   f32(32) (43)           
+                                                                O: eltwise_13_output                 f32(1x5x5x32) (44)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+15     conv2d_15        15   Conv2D          230432    36992    I: eltwise_13_output                 f32(1x5x5x32) (44)     
+                                                                S: conv2d_15_scratch0                                       
+                                                                W: conv2d_15_weights                 f32(32x3x3x32) (11)    
+                                                                W: conv2d_15_bias                    f32(32) (8)            
+                                                                O: conv2d_15_output                  f32(1x5x5x32) (9)      
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+16     nl_15_nl         15   Nonlinearity    800       0        I: conv2d_15_output                  f32(1x5x5x32) (9)      
+                                                                O: nl_15_nl_output                   f32(1x5x5x32) (77)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+17     eltwise_16       17   ScaleBias       1600      256      I: nl_15_nl_output                   f32(1x5x5x32) (77)     
+                                                                W: eltwise_16_scale                  f32(32) (48)           
+                                                                W: eltwise_16_bias                   f32(32) (46)           
+                                                                O: eltwise_16_output                 f32(1x5x5x32) (47)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+18     conv2d_22        22   Conv2D          25632     4224     I: eltwise_16_output                 f32(1x5x5x32) (47)     
+                                                                S: conv2d_22_scratch0                                       
+                                                                W: conv2d_22_weights                 f32(32x1x1x32) (19)    
+                                                                W: conv2d_22_bias                    f32(32) (16)           
+                                                                O: conv2d_22_output                  f32(1x5x5x32) (17)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+19     nl_22_nl         22   Nonlinearity    800       0        I: conv2d_22_output                  f32(1x5x5x32) (17)     
+                                                                O: nl_22_nl_output                   f32(1x5x5x32) (79)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+20     eltwise_23       24   ScaleBias       1600      256      I: nl_22_nl_output                   f32(1x5x5x32) (79)     
+                                                                W: eltwise_23_scale                  f32(32) (58)           
+                                                                W: eltwise_23_bias                   f32(32) (56)           
+                                                                O: eltwise_23_output                 f32(1x5x5x32) (57)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+21     conv2d_18        18   Conv2D          640032    102528   I: eltwise_16_output                 f32(1x5x5x32) (47)     
+                                                                S: conv2d_18_scratch0                                       
+                                                                W: conv2d_18_weights                 f32(32x5x5x32) (15)    
+                                                                W: conv2d_18_bias                    f32(32) (12)           
+                                                                O: conv2d_18_output                  f32(1x5x5x32) (13)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+22     nl_18_nl         18   Nonlinearity    800       0        I: conv2d_18_output                  f32(1x5x5x32) (13)     
+                                                                O: nl_18_nl_output                   f32(1x5x5x32) (78)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+23     eltwise_19       20   ScaleBias       1600      256      I: nl_18_nl_output                   f32(1x5x5x32) (78)     
+                                                                W: eltwise_19_scale                  f32(32) (51)           
+                                                                W: eltwise_19_bias                   f32(32) (49)           
+                                                                O: eltwise_19_output                 f32(1x5x5x32) (50)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+24     eltwise_21       21   Eltwise/add     800       0        I: eltwise_16_output                 f32(1x5x5x32) (47)     
+                                                                I: eltwise_19_output                 f32(1x5x5x32) (47)     
+                                                                O: eltwise_21_output                 f32(1x5x5x32) (55)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+25     eltwise_25       25   Eltwise/add     800       0        I: eltwise_21_output                 f32(1x5x5x32) (55)     
+                                                                I: eltwise_23_output                 f32(1x5x5x32) (55)     
+                                                                O: eltwise_25_output                 f32(1x5x5x32) (59)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+26     conv2d_26        26   Conv2D          82976     36992    I: eltwise_25_output                 f32(1x5x5x32) (59)     
+                                                                S: conv2d_26_scratch0                                       
+                                                                W: conv2d_26_weights                 f32(32x3x3x32) (23)    
+                                                                W: conv2d_26_bias                    f32(32) (20)           
+                                                                O: conv2d_26_output                  f32(1x3x3x32) (21)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+27     nl_26_nl         26   Nonlinearity    288       0        I: conv2d_26_output                  f32(1x3x3x32) (21)     
+                                                                O: nl_26_nl_output                   f32(1x3x3x32) (80)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+28     eltwise_27       28   ScaleBias       576       256      I: nl_26_nl_output                   f32(1x3x3x32) (80)     
+                                                                W: eltwise_27_scale                  f32(32) (62)           
+                                                                W: eltwise_27_bias                   f32(32) (60)           
+                                                                O: eltwise_27_output                 f32(1x3x3x32) (61)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+29     conv2d_29        29   Conv2D          82976     36992    I: eltwise_27_output                 f32(1x3x3x32) (61)     
+                                                                S: conv2d_29_scratch0                                       
+                                                                W: conv2d_29_weights                 f32(32x3x3x32) (27)    
+                                                                W: conv2d_29_bias                    f32(32) (24)           
+                                                                O: conv2d_29_output                  f32(1x3x3x32) (25)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+30     nl_29_nl         29   Nonlinearity    288       0        I: conv2d_29_output                  f32(1x3x3x32) (25)     
+                                                                O: nl_29_nl_output                   f32(1x3x3x32) (81)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+31     eltwise_30       31   ScaleBias       576       256      I: nl_29_nl_output                   f32(1x3x3x32) (81)     
+                                                                W: eltwise_30_scale                  f32(32) (65)           
+                                                                W: eltwise_30_bias                   f32(32) (63)           
+                                                                O: eltwise_30_output                 f32(1x3x3x32) (64)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+32     pool_32          32   Pool            288       0        I: eltwise_30_output                 f32(1x3x3x32) (64)     
+                                                                O: pool_32_output                    f32(1x1x1x32) (86)     
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+33     gemm_33          33   Dense           99        396      I: pool_32_output                    f32(1x1x1x32) (86)     
+                                                                W: gemm_33_weights                   f32(3x32) (74)         
+                                                                W: gemm_33_bias                      f32(3) (72)            
+                                                                O: gemm_33_output                    f32(1x3) (73)          
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+34     nl_34            34   Nonlinearity    45        0        I: gemm_33_output                    f32(1x3) (73)          
+                                                                O: nl_34_output                      f32(1x3) (82)          
+------ ---------------- ---- --------------- --------- -------- ------------------------------------ ---------------------- 
+
+
+
+Number of operations per c-layer
+------- ------ -------------------------- ----------- -------------- 
+c_id    m_id   name (type)                        #op           type 
+------- ------ -------------------------- ----------- -------------- 
+0       0      conv2d_0 (Conv2D)              345,632   smul_f32_f32 
+1       0      nl_0_nl (Nonlinearity)          12,800     op_f32_f32 
+2       2      eltwise_1 (ScaleBias)           25,600   smul_f32_f32 
+3       3      conv2d_3 (Conv2D)            3,686,432   smul_f32_f32 
+4       3      nl_3_nl (Nonlinearity)          12,800     op_f32_f32 
+5       5      eltwise_4 (ScaleBias)           25,600   smul_f32_f32 
+6       6      conv2d_6 (Conv2D)              921,632   smul_f32_f32 
+7       6      nl_6_nl (Nonlinearity)           3,200     op_f32_f32 
+8       8      eltwise_7 (ScaleBias)            6,400   smul_f32_f32 
+9       9      conv2d_9 (Conv2D)              921,632   smul_f32_f32 
+10      9      nl_9_nl (Nonlinearity)           3,200     op_f32_f32 
+11      11     eltwise_10 (ScaleBias)           6,400   smul_f32_f32 
+12      12     conv2d_12 (Conv2D)             230,432   smul_f32_f32 
+13      12     nl_12_nl (Nonlinearity)            800     op_f32_f32 
+14      14     eltwise_13 (ScaleBias)           1,600   smul_f32_f32 
+15      15     conv2d_15 (Conv2D)             230,432   smul_f32_f32 
+16      15     nl_15_nl (Nonlinearity)            800     op_f32_f32 
+17      17     eltwise_16 (ScaleBias)           1,600   smul_f32_f32 
+18      22     conv2d_22 (Conv2D)              25,632   smul_f32_f32 
+19      22     nl_22_nl (Nonlinearity)            800     op_f32_f32 
+20      24     eltwise_23 (ScaleBias)           1,600   smul_f32_f32 
+21      18     conv2d_18 (Conv2D)             640,032   smul_f32_f32 
+22      18     nl_18_nl (Nonlinearity)            800     op_f32_f32 
+23      20     eltwise_19 (ScaleBias)           1,600   smul_f32_f32 
+24      21     eltwise_21 (Eltwise/add)           800     op_f32_f32 
+25      25     eltwise_25 (Eltwise/add)           800     op_f32_f32 
+26      26     conv2d_26 (Conv2D)              82,976   smul_f32_f32 
+27      26     nl_26_nl (Nonlinearity)            288     op_f32_f32 
+28      28     eltwise_27 (ScaleBias)             576   smul_f32_f32 
+29      29     conv2d_29 (Conv2D)              82,976   smul_f32_f32 
+30      29     nl_29_nl (Nonlinearity)            288     op_f32_f32 
+31      31     eltwise_30 (ScaleBias)             576   smul_f32_f32 
+32      32     pool_32 (Pool)                     288   smul_f32_f32 
+33      33     gemm_33 (Dense)                     99   smul_f32_f32 
+34      34     nl_34 (Nonlinearity)                45     op_f32_f32 
+------- ------ -------------------------- ----------- -------------- 
+total                                       7,277,168 
+
+Number of operation types
+---------------- ----------- ----------- 
+operation type             #           % 
+---------------- ----------- ----------- 
+smul_f32_f32       7,239,747       99.5% 
+op_f32_f32            37,421        0.5% 
+
+Complexity report (model)
+------ ---------------------------------------------- ------------------------- ------------------------- ---------- 
+m_id   name                                           c_macc                    c_rom                     c_id       
+------ ---------------------------------------------- ------------------------- ------------------------- ---------- 
+0      serving_default_input_10                       ||                 4.9%   |                  1.0%   [0, 1]     
+2      model_batch_normalization_FusedBatchNormV3     |                  0.4%   |                  0.1%   [2]        
+3      conv2d_3                                       ||||||||||||||||  50.8%   ||||||             9.9%   [3, 4]     
+5      model_batch_normalization_1_FusedBatchNormV3   |                  0.4%   |                  0.1%   [5]        
+6      conv2d_6                                       ||||              12.7%   ||||||             9.9%   [6, 7]     
+8      model_batch_normalization_2_FusedBatchNormV3   |                  0.1%   |                  0.1%   [8]        
+9      conv2d_9                                       ||||              12.7%   ||||||             9.9%   [9, 10]    
+11     model_batch_normalization_3_FusedBatchNormV3   |                  0.1%   |                  0.1%   [11]       
+12     conv2d_12                                      |                  3.2%   ||||||             9.9%   [12, 13]   
+14     model_batch_normalization_4_FusedBatchNormV3   |                  0.0%   |                  0.1%   [14]       
+15     conv2d_15                                      |                  3.2%   ||||||             9.9%   [15, 16]   
+17     model_batch_normalization_5_FusedBatchNormV3   |                  0.0%   |                  0.1%   [17]       
+18     conv2d_18                                      |||                8.8%   ||||||||||||||||  27.5%   [21, 22]   
+20     model_batch_normalization_6_FusedBatchNormV3   |                  0.0%   |                  0.1%   [23]       
+21     eltwise_21                                     |                  0.0%   |                  0.0%   [24]       
+22     conv2d_22                                      |                  0.4%   |                  1.1%   [18, 19]   
+24     model_batch_normalization_7_FusedBatchNormV3   |                  0.0%   |                  0.1%   [20]       
+25     eltwise_25                                     |                  0.0%   |                  0.0%   [25]       
+26     conv2d_26                                      |                  1.1%   ||||||             9.9%   [26, 27]   
+28     model_batch_normalization_8_FusedBatchNormV3   |                  0.0%   |                  0.1%   [28]       
+29     conv2d_29                                      |                  1.1%   ||||||             9.9%   [29, 30]   
+31     model_batch_normalization_9_FusedBatchNormV3   |                  0.0%   |                  0.1%   [31]       
+32     pool_32                                        |                  0.0%   |                  0.0%   [32]       
+33     model_dense_MatMul                             |                  0.0%   |                  0.1%   [33]       
+34     nl_34                                          |                  0.0%   |                  0.0%   [34]       
+------ ---------------------------------------------- ------------------------- ------------------------- ---------- 
+macc=7,277,168 weights=372,236 act=62,988 ram_io=0
+
+Generated files (7)
+------------------------------------------------------------------ 
+C:\Users\18033\.stm32cubemx\network_output\network_data_params.h   
+C:\Users\18033\.stm32cubemx\network_output\network_data_params.c   
+C:\Users\18033\.stm32cubemx\network_output\network_data.h          
+C:\Users\18033\.stm32cubemx\network_output\network_data.c          
+C:\Users\18033\.stm32cubemx\network_output\network_config.h        
+C:\Users\18033\.stm32cubemx\network_output\network.h               
+C:\Users\18033\.stm32cubemx\network_output\network.c               

@@ -1,0 +1,12 @@
+libjpeg\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/port.c
+libjpeg\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+libjpeg\port.o: D:\keil\ARM\ARMCC\Bin\..\include\stddef.h
+libjpeg\port.o: D:\keil\ARM\ARMCC\Bin\..\include\stdint.h
+libjpeg\port.o: ../Core/Inc/FreeRTOSConfig.h
+libjpeg\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+libjpeg\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+libjpeg\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+libjpeg\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+libjpeg\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+libjpeg\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+libjpeg\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
